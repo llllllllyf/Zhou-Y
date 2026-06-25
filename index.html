@@ -16,7 +16,6 @@
             --shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
             --accent: #5c3d2e;
             --jade: #6b8e6b;
-            --jade-light: #e8f0e3;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -26,6 +25,30 @@
                 radial-gradient(ellipse at 80% 90%, rgba(139,26,26,0.03) 0%, transparent 60%);
             color: var(--text); min-height: 100vh; line-height: 1.7;
         }
+        /* 模态框 */
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.55); z-index: 1000;
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+        .modal-box {
+            background: #fffef9; border-radius: 16px; padding: 32px 24px;
+            max-width: 500px; width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            text-align: center; border: 1px solid var(--gold);
+        }
+        .modal-box h2 { font-size: 1.6rem; color: var(--accent); margin-bottom: 8px; letter-spacing: 2px; }
+        .modal-box .subtitle { font-size: 0.85rem; color: var(--text-light); letter-spacing: 1px; margin-bottom: 20px; }
+        .modal-box ul { list-style: none; text-align: left; margin: 0 auto 24px; padding: 0 10px; }
+        .modal-box li { padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .modal-box li::before { content: "☯"; font-size: 1.2rem; color: var(--gold); }
+        .modal-box .btn-begin {
+            display: inline-block; padding: 12px 40px; background: var(--accent);
+            color: #fff; border: none; border-radius: 28px; font-size: 1rem;
+            letter-spacing: 2px; cursor: pointer; transition: all 0.3s;
+            font-family: inherit; box-shadow: 0 4px 14px rgba(92,61,46,0.3);
+        }
+        .modal-box .btn-begin:hover { background: #4a2d1a; transform: translateY(-1px); }
         .container { max-width: 780px; margin: 0 auto; padding: 16px 18px 40px; }
         .header { text-align: center; padding: 28px 0 10px; position: relative; }
         .header .bagua-symbol { font-size: 52px; letter-spacing: 6px; opacity: 0.7; display: block; }
@@ -128,6 +151,23 @@
     </style>
 </head>
 <body>
+
+<!-- 起卦心法模态框 -->
+<div class="modal-overlay" id="welcomeModal">
+    <div class="modal-box">
+        <h2>Before You Cast</h2>
+        <p class="subtitle">The I Ching responds to sincerity</p>
+        <ul>
+            <li><strong>Quiet your mind.</strong> Breathe deeply and release distracting thoughts.</li>
+            <li><strong>Sincerity is the key.</strong> The oracle speaks only to those who approach with true intention.</li>
+            <li><strong>Do not divine idly.</strong> Ask only when the matter truly moves your heart.</li>
+            <li><strong>Once you ask, do not doubt.</strong> Trust the answer you receive, for a divided heart sees nothing clearly.</li>
+            <li><strong>Respect the hexagram.</strong> Approach this ancient wisdom with reverence, not as a game.</li>
+        </ul>
+        <button class="btn-begin" onclick="closeModal()">I Understand, Let's Begin</button>
+    </div>
+</div>
+
 <div class="container">
     <div class="header">
         <span class="bagua-symbol">☰ ☷ ☲ ☵ ☳ ☴ ☶ ☱</span>
@@ -167,7 +207,20 @@
     </div>
     <div class="toast" id="toast"></div>
 </div>
+
 <script>
+    // 关闭模态框
+    function closeModal() {
+        document.getElementById('welcomeModal').style.display = 'none';
+        try { sessionStorage.setItem('iChingWelcomed', 'true'); } catch(e) {}
+    }
+    // 页面加载时，如果已在本会话中确认过，则不再显示
+    (function() {
+        if (sessionStorage.getItem('iChingWelcomed')) {
+            document.getElementById('welcomeModal').style.display = 'none';
+        }
+    })();
+
     const BA_GUA = {
         '111': { name: '乾', symbol: '☰', wuxing: 'Metal', nature: 'Heaven' },
         '110': { name: '兑', symbol: '☱', wuxing: 'Metal', nature: 'Lake' },
@@ -245,7 +298,6 @@
         [64,'火水未济','wèi jì','101','010','亨。小狐汔济，濡其尾，无攸利。','未济亨，柔得中也。小狐汔济，未出中也。濡其尾无攸利，不续终也。虽不当位，刚柔应也。','火在水上，未济。君子以慎辨物居方。',['濡其尾，吝。','曳其轮，贞吉。','未济，征凶，利涉大川。','贞吉悔亡。震用伐鬼方，三年有赏于大国。','贞吉无悔。君子之光，有孚吉。','有孚于饮酒，无咎。濡其首，有孚失是。']]
     ];
 
-    // 丰富后的分类解读，覆盖64卦
     const DIVINATION_GUIDE = {
         1: {career:"The dragon soars. Seize the moment and lead with clarity. Your initiative will be rewarded, but remember that true power is tempered with humility.", love:"A union charged with vitality. Step forward with confidence, yet hold space for the other. Authentic strength attracts lasting love.", health:"Vitality is at its peak. Do not neglect rest, for even the sun yields to night. Balance activity with stillness to sustain this radiance.", lost_item:"Seek in elevated places or among objects of prominence. What is lost may soon be restored through the light of attentive searching.", finance:"Prosperity flows. Invest with boldness, yet avoid reckless ventures. The time favors strategic growth and clear vision."},
         2: {career:"Nurture your path with patience. The earth rewards those who toil with devotion. Your quiet persistence will open doors that force cannot.", love:"A receptive and nurturing energy surrounds you. Love flourishes when you listen deeply and offer gentle, unwavering support.", health:"Rest and nourishment are your allies. Honor your body's rhythms and avoid overexertion. Gentle care restores balance.", lost_item:"Look low, near the ground or in quiet, hidden spaces. Ask others for help; the collective eye sees more than the solitary seeker.", finance:"Steady accumulation is favored. Avoid speculation; instead, plant seeds for long-term security. The harvest will come in due time."},
