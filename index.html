@@ -59,8 +59,8 @@
             backdrop-filter: blur(6px);
         }
         .modal-box {
-            background: #fefdf7; border-radius: 20px; padding: 36px 28px 28px;
-            max-width: 520px; width: 92%; box-shadow: 0 30px 50px rgba(0,0,0,0.4);
+            background: #fefdf7; border-radius: 20px; padding: 36px 32px 28px;
+            max-width: 580px; width: 92%; box-shadow: 0 30px 50px rgba(0,0,0,0.4);
             text-align: center; border: 2px solid var(--gold);
             position: relative;
             background-image: linear-gradient(to bottom, #fffef9, #faf6ed);
@@ -80,14 +80,15 @@
         }
         .modal-box li {
             padding: 10px 0; border-bottom: 1px dashed var(--border);
-            font-size: 0.95rem; display: flex; align-items: flex-start; gap: 10px;
+            font-size: 0.95rem; display: flex; align-items: flex-start; gap: 12px;
             color: #3d3226; line-height: 1.6;
         }
         .modal-box li::before {
-            content: "☯"; font-size: 1.3rem; color: var(--gold); flex-shrink: 0;
-            margin-top: 1px;
+            content: "☯"; font-size: 1.3rem; color: var(--gold);
+            flex-shrink: 0; width: 24px; text-align: center;
+            margin-right: 4px; margin-top: 1px;
         }
-        .modal-box li strong { display: inline; font-weight: 600; }
+        .modal-box li strong { font-weight: 600; }
         .modal-box .btn-begin {
             display: inline-block; padding: 12px 44px; background: var(--accent);
             color: #fff; border: none; border-radius: 32px; font-size: 1.05rem;
