@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>周易六十四卦 - 起卦解卦工具</title>
+    <title>Zhou Yi Divination - I Ching Hexagram Tool</title>
     <style>
         :root {
             --bg: #fdf6ee;
@@ -29,7 +29,7 @@
             box-sizing: border-box;
         }
         body {
-            font-family: 'Noto Serif SC', 'STSong', 'SimSun', 'KaiTi', '楷体', '宋体', serif;
+            font-family: 'Noto Serif SC', 'STSong', 'SimSun', 'KaiTi', '楷体', '宋体', 'Times New Roman', serif;
             background: var(--bg);
             background-image:
                 radial-gradient(ellipse at 20% 10%, rgba(184, 134, 11, 0.04) 0%, transparent 60%),
@@ -83,7 +83,7 @@
             opacity: 0.6;
         }
 
-        /* 起卦方式选择 */
+        /* Method tabs */
         .method-tabs {
             display: flex;
             gap: 8px;
@@ -116,7 +116,7 @@
             font-weight: 600;
         }
 
-        /* 主卡片 */
+        /* Main card */
         .main-card {
             background: var(--card);
             border: 1px solid var(--border);
@@ -130,7 +130,7 @@
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
         }
 
-        /* 摇卦区域 */
+        /* Coin area */
         .shake-area {
             text-align: center;
             padding: 10px 0;
@@ -178,21 +178,11 @@
             color: #3d2a0a;
         }
         @keyframes coinFlip {
-            0% {
-                transform: rotateY(0) scale(1);
-            }
-            30% {
-                transform: rotateY(180deg) scale(1.15);
-            }
-            60% {
-                transform: rotateY(360deg) scale(0.9);
-            }
-            80% {
-                transform: rotateY(540deg) scale(1.05);
-            }
-            100% {
-                transform: rotateY(720deg) scale(1);
-            }
+            0% { transform: rotateY(0) scale(1); }
+            30% { transform: rotateY(180deg) scale(1.15); }
+            60% { transform: rotateY(360deg) scale(0.9); }
+            80% { transform: rotateY(540deg) scale(1.05); }
+            100% { transform: rotateY(720deg) scale(1); }
         }
 
         .btn-shake {
@@ -245,7 +235,7 @@
             color: var(--red);
         }
 
-        /* 六爻显示 */
+        /* Yao lines */
         .yao-lines {
             margin: 16px 0;
             display: flex;
@@ -283,13 +273,8 @@
             animation: pulse 1.5s ease-in-out infinite;
         }
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.5;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         .yao-desc {
             font-size: 0.78rem;
@@ -313,38 +298,20 @@
             background: #888;
         }
 
-        /* 结果展示 */
+        /* Result section */
         .result-section {
             margin-top: 20px;
             padding-top: 16px;
             border-top: 1px dashed var(--border);
         }
-        .gua-cards {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-        @media (max-width: 500px) {
-            .gua-cards {
-                grid-template-columns: 1fr;
-            }
-        }
         .gua-card {
             background: linear-gradient(180deg, #fffef9 0%, #fdf8ef 100%);
-            border: 1.5px solid var(--border);
+            border: 1.5px solid var(--gold);
             border-radius: 12px;
             padding: 18px 16px;
             text-align: center;
-            transition: all 0.3s;
-            position: relative;
-        }
-        .gua-card.ben-gua {
-            border-color: var(--gold);
             box-shadow: 0 0 0 1px rgba(184, 134, 11, 0.15);
-        }
-        .gua-card.bian-gua {
-            border-color: #c0a0a0;
-            box-shadow: 0 0 0 1px rgba(160, 100, 100, 0.1);
+            margin-bottom: 14px;
         }
         .gua-card .card-label {
             font-size: 0.75rem;
@@ -354,14 +321,14 @@
             text-transform: uppercase;
         }
         .gua-card .gua-name {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: 3px;
             color: var(--accent);
             margin: 4px 0;
         }
         .gua-card .gua-pinyin {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             color: var(--text-light);
             letter-spacing: 1px;
         }
@@ -377,7 +344,6 @@
             letter-spacing: 1px;
         }
 
-        /* 解读区 */
         .interpretation {
             margin-top: 16px;
             padding: 16px;
@@ -418,34 +384,6 @@
             color: #407040;
         }
 
-        /* 互卦错卦综卦 */
-        .extra-gua {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 14px;
-        }
-        .extra-gua-item {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 14px;
-            text-align: center;
-            font-size: 0.8rem;
-            min-width: 70px;
-        }
-        .extra-gua-item .eg-name {
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: var(--accent);
-        }
-        .extra-gua-item .eg-symbol {
-            font-size: 1.3rem;
-            letter-spacing: 3px;
-        }
-
-        /* 时间起卦 */
         .time-gua-display {
             text-align: center;
             padding: 10px;
@@ -460,7 +398,6 @@
             letter-spacing: 2px;
         }
 
-        /* 响应式 */
         @media (max-width: 600px) {
             .container {
                 padding: 10px 10px 30px;
@@ -488,7 +425,7 @@
                 font-size: 2rem;
             }
             .gua-card .gua-name {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
             }
             .btn-shake {
                 padding: 10px 28px;
@@ -496,7 +433,6 @@
             }
         }
 
-        /* 加载提示 */
         .toast {
             position: fixed;
             top: 20px;
@@ -518,12 +454,6 @@
             opacity: 1;
         }
 
-        /* 暗色模式提示兼容 */
-        @media (prefers-color-scheme: dark) {
-            /* 保持暖色调，略微调整 */
-        }
-
-        /* 打印样式 */
         @media print {
             body {
                 background: #fff;
@@ -544,76 +474,71 @@
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <span class="bagua-symbol">☰ ☷ ☲ ☵ ☳ ☴ ☶ ☱</span>
-            <h1>周易六十四卦</h1>
-            <p class="subtitle">起卦 · 解卦 · 参悟</p>
+            <h1>Zhou Yi Divination</h1>
+            <p class="subtitle">I Ching Hexagram Tool</p>
         </div>
 
-        <!-- 起卦方式 -->
         <div class="method-tabs">
-            <button class="method-tab active" data-method="coin" title="模拟三枚铜钱摇卦六次">🪙 铜钱摇卦</button>
-            <button class="method-tab" data-method="time" title="根据当前时间自动起卦">🕐 时间起卦</button>
-            <button class="method-tab" data-method="quick" title="一键随机生成卦象">🎲 快速起卦</button>
+            <button class="method-tab active" data-method="coin" title="Simulate tossing three coins six times">🪙 Coin Toss</button>
+            <button class="method-tab" data-method="time" title="Automatic hexagram based on current time">🕐 Time-based</button>
+            <button class="method-tab" data-method="quick" title="Instant random hexagram">🎲 Quick Cast</button>
         </div>
 
-        <!-- 主卡片 -->
         <div class="main-card" id="mainCard">
-            <!-- 铜钱摇卦区域 -->
+            <!-- Coin shaking area -->
             <div class="shake-area" id="shakeArea">
-                <p class="shake-info" id="shakeInfo">点击下方按钮摇卦，共需摇 <strong>六次</strong>（从初爻到上爻）</p>
+                <p class="shake-info" id="shakeInfo">Click the button below to toss coins <strong>six times</strong> (from the first line to the top line)</p>
                 <div class="coins-display" id="coinsDisplay">
                     <div class="coin heads">☯</div>
                     <div class="coin heads">☯</div>
                     <div class="coin heads">☯</div>
                 </div>
                 <div style="margin-top:8px;">
-                    <button class="btn-shake" id="btnShake" onclick="shakeCoins()">🪙 摇 卦</button>
-                    <button class="btn-reset" id="btnReset" onclick="resetAll()">重新开始</button>
+                    <button class="btn-shake" id="btnShake" onclick="shakeCoins()">🪙 Shake</button>
+                    <button class="btn-reset" id="btnReset" onclick="resetAll()">Start Over</button>
                 </div>
                 <div class="yao-lines" id="yaoLines"></div>
             </div>
 
-            <!-- 时间起卦区域 -->
+            <!-- Time-based area -->
             <div class="time-gua-display" id="timeGuaArea" style="display:none;">
-                <p style="letter-spacing:1px;color:var(--text-light);">当前时间起卦</p>
+                <p style="letter-spacing:1px;color:var(--text-light);">Current Time Divination</p>
                 <p class="big-num" id="timeDisplay"></p>
-                <p style="font-size:0.8rem;color:var(--text-light);">年+月+日 → 上卦 | 年+月+日+时 → 下卦 | 分钟 → 动爻</p>
-                <button class="btn-shake" onclick="generateTimeGua()" style="margin-top:10px;">🕐 生成时间卦</button>
+                <p style="font-size:0.8rem;color:var(--text-light);">Year+Month+Day → Upper Trigram | +Hour → Lower Trigram | Minute → Moving Yao</p>
+                <button class="btn-shake" onclick="generateTimeGua()" style="margin-top:10px;">🕐 Cast by Time</button>
                 <div class="yao-lines" id="yaoLinesTime"></div>
             </div>
 
-            <!-- 快速起卦区域 -->
+            <!-- Quick cast area -->
             <div class="shake-area" id="quickGuaArea" style="display:none;">
-                <p style="letter-spacing:1px;color:var(--text-light);margin-bottom:12px;">一键随机生成完整卦象</p>
-                <button class="btn-shake" onclick="generateQuickGua()">🎲 随机起卦</button>
+                <p style="letter-spacing:1px;color:var(--text-light);margin-bottom:12px;">Generate a full hexagram instantly</p>
+                <button class="btn-shake" onclick="generateQuickGua()">🎲 Quick Cast</button>
                 <div class="yao-lines" id="yaoLinesQuick"></div>
             </div>
 
-            <!-- 结果展示 -->
+            <!-- Result display -->
             <div class="result-section" id="resultSection" style="display:none;"></div>
         </div>
 
-        <!-- Toast -->
         <div class="toast" id="toast"></div>
     </div>
 
     <script>
-        // ==================== 八卦基础 ====================
+        // ==================== Trigrams Base ====================
         const BA_GUA = {
-            '111': { name: '乾', symbol: '☰', wuxing: '金', nature: '天', direction: '西北' },
-            '110': { name: '兑', symbol: '☱', wuxing: '金', nature: '泽', direction: '西' },
-            '101': { name: '离', symbol: '☲', wuxing: '火', nature: '火', direction: '南' },
-            '100': { name: '震', symbol: '☳', wuxing: '木', nature: '雷', direction: '东' },
-            '011': { name: '巽', symbol: '☴', wuxing: '木', nature: '风', direction: '东南' },
-            '010': { name: '坎', symbol: '☵', wuxing: '水', nature: '水', direction: '北' },
-            '001': { name: '艮', symbol: '☶', wuxing: '土', nature: '山', direction: '东北' },
-            '000': { name: '坤', symbol: '☷', wuxing: '土', nature: '地', direction: '西南' }
+            '111': { name: '乾', symbol: '☰', wuxing: 'Metal', nature: 'Heaven', direction: 'NW' },
+            '110': { name: '兑', symbol: '☱', wuxing: 'Metal', nature: 'Lake', direction: 'W' },
+            '101': { name: '离', symbol: '☲', wuxing: 'Fire', nature: 'Fire', direction: 'S' },
+            '100': { name: '震', symbol: '☳', wuxing: 'Wood', nature: 'Thunder', direction: 'E' },
+            '011': { name: '巽', symbol: '☴', wuxing: 'Wood', nature: 'Wind', direction: 'SE' },
+            '010': { name: '坎', symbol: '☵', wuxing: 'Water', nature: 'Water', direction: 'N' },
+            '001': { name: '艮', symbol: '☶', wuxing: 'Earth', nature: 'Mountain', direction: 'NE' },
+            '000': { name: '坤', symbol: '☷', wuxing: 'Earth', nature: 'Earth', direction: 'SW' }
         };
 
-        // 六十四卦完整数据（卦序、卦名、上下卦、卦辞、彖传、大象传、爻辞）
-        // 数据结构: [卦序, 卦名, 拼音, 上卦key, 下卦key, 卦辞, 彖传, 大象传, [初爻,二爻,三爻,四爻,五爻,上爻], 用九/用六(可选)]
+        // 64 Hexagrams Data: [index, name, pinyin, upper key, lower key, gua ci, tuan zhuan, da xiang, [6 yao ci], yong (optional)]
         const GUA_DATA = [
             [1, '乾为天', 'qián', '111', '111',
                 '元亨利贞。',
@@ -1075,8 +1000,7 @@
             ]
         ];
 
-        // 构建查询索引
-        const guaMap = {}; // key: "上卦key|下卦key" -> gua数据
+        const guaMap = {};
         GUA_DATA.forEach(g => {
             const key = g[3] + '|' + g[4];
             guaMap[key] = g;
@@ -1091,18 +1015,14 @@
             return BA_GUA[key] || null;
         }
 
-        // ==================== 全局状态 ====================
+        // ==================== Global State ====================
         let currentMethod = 'coin';
         let shakeCount = 0;
-        let yaoResults = []; // [{value: 6|7|8|9, isYang: bool, isChanging: bool}]
+        let yaoResults = []; // [{value, isYang, isChanging}]
         let currentBenGua = null;
-        let currentBianGua = null;
-        let currentHuGua = null;
-        let currentCuoGua = null;
-        let currentZongGua = null;
         let changingYaoIndexes = [];
 
-        // ==================== 工具函数 ====================
+        // ==================== Utility Functions ====================
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;
@@ -1114,44 +1034,40 @@
         }
 
         function yaoValueToDisplay(v) {
-            if (v === 6) return { symbol: '⚋×', desc: '老阴(6)→变阳', cls: 'changing', isYang: false,
-            isChanging: true };
-            if (v === 7) return { symbol: '⚊', desc: '少阳(7)', cls: '', isYang: true, isChanging: false };
-            if (v === 8) return { symbol: '⚋', desc: '少阴(8)', cls: '', isYang: false, isChanging: false };
-            if (v === 9) return { symbol: '⚊○', desc: '老阳(9)→变阴', cls: 'changing', isYang: true, isChanging: true };
-            return { symbol: '?', desc: '未知', cls: '', isYang: false, isChanging: false };
+            if (v === 6) return { symbol: '⚋×', desc: 'Old Yin (6)→Yang', cls: 'changing', isYang: false, isChanging: true };
+            if (v === 7) return { symbol: '⚊', desc: 'Young Yang (7)', cls: '', isYang: true, isChanging: false };
+            if (v === 8) return { symbol: '⚋', desc: 'Young Yin (8)', cls: '', isYang: false, isChanging: false };
+            if (v === 9) return { symbol: '⚊○', desc: 'Old Yang (9)→Yin', cls: 'changing', isYang: true, isChanging: true };
+            return { symbol: '?', desc: 'Unknown', cls: '', isYang: false, isChanging: false };
         }
 
-        // 三枚铜钱随机结果
         function tossThreeCoins() {
             const r = Math.random();
-            if (r < 0.125) return { value: 6, faces: ['tails', 'tails', 'tails'] }; // 老阴 三个反面
-            if (r < 0.5) return { value: 8, faces: ['tails', 'tails', 'heads'] }; // 少阴 两反一正
-            if (r < 0.875) return { value: 7, faces: ['heads', 'heads', 'tails'] }; // 少阳 两正一反
-            return { value: 9, faces: ['heads', 'heads', 'heads'] }; // 老阳 三个正面
+            if (r < 0.125) return { value: 6, faces: ['tails','tails','tails'] };
+            if (r < 0.5)   return { value: 8, faces: ['tails','tails','heads'] };
+            if (r < 0.875) return { value: 7, faces: ['heads','heads','tails'] };
+            return { value: 9, faces: ['heads','heads','heads'] };
         }
 
-        // ==================== 铜钱摇卦 ====================
+        // ==================== Coin Shaking ====================
         function shakeCoins() {
             if (shakeCount >= 6) {
-                showToast('已完成六次摇卦，请查看结果或重新开始');
+                showToast('You have already cast six times. View result or start over.');
                 return;
             }
             const btn = document.getElementById('btnShake');
             btn.disabled = true;
 
-            // 硬币动画
             const coins = document.querySelectorAll('#coinsDisplay .coin');
             coins.forEach(c => c.classList.add('spinning'));
 
-            // 随机结果
             const result = tossThreeCoins();
             const faces = result.faces;
 
             setTimeout(() => {
                 coins.forEach((c, i) => {
                     c.classList.remove('spinning');
-                    c.textContent = faces[i] === 'heads' ? '正' : '反';
+                    c.textContent = faces[i] === 'heads' ? 'H' : 'T';
                     c.className = 'coin ' + (faces[i] === 'heads' ? 'heads' : 'tails');
                 });
             }, 400);
@@ -1166,21 +1082,22 @@
                 });
 
                 updateYaoLinesDisplay('yaoLines');
+                const yaoNames = ['First','Second','Third','Fourth','Fifth','Top'];
                 document.getElementById('shakeInfo').innerHTML =
-                    `已摇 <strong>${shakeCount}/6</strong> 次 —— 第${['初','二','三','四','五','上'][shakeCount-1]}爻：<span style="color:${display.isChanging?'var(--red)':'var(--accent)'}">${display.desc}</span>`;
+                    `Cast <strong>${shakeCount}/6</strong> — ${yaoNames[shakeCount-1]} Yao: <span style="color:${display.isChanging?'var(--red)':'var(--accent)'}">${display.desc}</span>`;
 
                 if (shakeCount >= 6) {
-                    document.getElementById('btnShake').textContent = '✅ 查看结果';
+                    document.getElementById('btnShake').textContent = '✅ View Result';
                     document.getElementById('btnShake').disabled = false;
                     document.getElementById('btnShake').onclick = function() {
                         buildGuaFromResults();
                     };
                     document.getElementById('shakeInfo').innerHTML =
-                        '<strong style="color:var(--accent);">六爻已齐！点击"查看结果"进行解卦</strong>';
-                    showToast('六爻摇毕，请查看解卦结果');
+                        '<strong style="color:var(--accent);">All six lines cast! Click "View Result" for interpretation.</strong>';
+                    showToast('Casting complete. View your hexagram now.');
                 } else {
                     document.getElementById('btnShake').disabled = false;
-                    document.getElementById('btnShake').textContent = '🪙 摇第' + (shakeCount + 1) + '次';
+                    document.getElementById('btnShake').textContent = '🪙 Cast ' + (shakeCount+1) + ' of 6';
                 }
             }, 500);
         }
@@ -1188,10 +1105,8 @@
         function updateYaoLinesDisplay(containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
-            const labels = ['上爻', '五爻', '四爻', '三爻', '二爻', '初爻'];
+            const labels = ['Top','Fifth','Fourth','Third','Second','First'];
             let html = '';
-            // 从下往上显示：初爻在底部，上爻在顶部
-            // 在视觉上，上爻在上面，所以从数组末尾往前遍历
             const displayOrder = [];
             for (let i = yaoResults.length - 1; i >= 0; i--) {
                 displayOrder.push({ index: i, label: labels[i], result: yaoResults[i] });
@@ -1211,51 +1126,24 @@
 
         function buildGuaFromResults() {
             if (yaoResults.length < 6) {
-                showToast('请先完成六次摇卦');
+                showToast('Please complete all six casts first.');
                 return;
             }
-            // yaoResults[0]=初爻 ... yaoResults[5]=上爻
-            const benYaoYang = yaoResults.map(r => r.isYang); // true=阳 false=阴
-            const bianYaoYang = yaoResults.map(r => r.isChanging ? !r.isYang : r.isYang);
-
-            const benShangKey = (benYaoYang[3] ? '1' : '0') + (benYaoYang[4] ? '1' : '0') + (benYaoYang[5] ? '1' :
-            '0');
-            const benXiaKey = (benYaoYang[0] ? '1' : '0') + (benYaoYang[1] ? '1' : '0') + (benYaoYang[2] ? '1' : '0');
-            const bianShangKey = (bianYaoYang[3] ? '1' : '0') + (bianYaoYang[4] ? '1' : '0') + (bianYaoYang[5] ? '1' :
-                '0');
-            const bianXiaKey = (bianYaoYang[0] ? '1' : '0') + (bianYaoYang[1] ? '1' : '0') + (bianYaoYang[2] ? '1' :
-            '0');
+            const benYaoYang = yaoResults.map(r => r.isYang);
+            const benShangKey = (benYaoYang[3]?'1':'0')+(benYaoYang[4]?'1':'0')+(benYaoYang[5]?'1':'0');
+            const benXiaKey = (benYaoYang[0]?'1':'0')+(benYaoYang[1]?'1':'0')+(benYaoYang[2]?'1':'0');
 
             currentBenGua = getGuaByTrigrams(benShangKey, benXiaKey);
-            currentBianGua = getGuaByTrigrams(bianShangKey, bianXiaKey);
             changingYaoIndexes = [];
             yaoResults.forEach((r, i) => {
                 if (r.isChanging) changingYaoIndexes.push(i);
             });
 
-            // 互卦
-            const huXiaKey = (benYaoYang[1] ? '1' : '0') + (benYaoYang[2] ? '1' : '0') + (benYaoYang[3] ? '1' : '0');
-            const huShangKey = (benYaoYang[2] ? '1' : '0') + (benYaoYang[3] ? '1' : '0') + (benYaoYang[4] ? '1' : '0');
-            currentHuGua = getGuaByTrigrams(huShangKey, huXiaKey);
-
-            // 错卦
-            const cuoYaoYang = benYaoYang.map(y => !y);
-            const cuoShangKey = (cuoYaoYang[3] ? '1' : '0') + (cuoYaoYang[4] ? '1' : '0') + (cuoYaoYang[5] ? '1' : '0');
-            const cuoXiaKey = (cuoYaoYang[0] ? '1' : '0') + (cuoYaoYang[1] ? '1' : '0') + (cuoYaoYang[2] ? '1' : '0');
-            currentCuoGua = getGuaByTrigrams(cuoShangKey, cuoXiaKey);
-
-            // 综卦
-            const zongYaoYang = [...benYaoYang].reverse();
-            const zongShangKey = (zongYaoYang[3] ? '1' : '0') + (zongYaoYang[4] ? '1' : '0') + (zongYaoYang[5] ? '1' :
-                '0');
-            const zongXiaKey = (zongYaoYang[0] ? '1' : '0') + (zongYaoYang[1] ? '1' : '0') + (zongYaoYang[2] ? '1' : '0');
-            currentZongGua = getGuaByTrigrams(zongShangKey, zongXiaKey);
-
-            renderFullResult();
+            renderResult();
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ==================== 时间起卦 ====================
+        // ==================== Time-based Cast ====================
         function generateTimeGua() {
             const now = new Date();
             const year = now.getFullYear();
@@ -1268,19 +1156,15 @@
             const sum2 = year + month + day + hour;
             const shangNum = ((sum1 - 1) % 8);
             const xiaNum = ((sum2 - 1) % 8);
-            const dongYaoNum = ((minute - 1) % 6); // 0-5对应初爻到上爻
+            const dongYaoNum = ((minute - 1) % 6);
 
-            const baguaKeys = ['111', '110', '101', '100', '011', '010', '001', '000']; // 乾兑离震巽坎艮坤
+            const baguaKeys = ['111','110','101','100','011','010','001','000'];
             const shangKey = baguaKeys[shangNum];
             const xiaKey = baguaKeys[xiaNum];
-
-            const shangBagua = getBaguaByKey(shangKey);
-            const xiaBagua = getBaguaByKey(xiaKey);
-
-            // 构建六爻
             const shangBits = shangKey.split('').map(Number);
             const xiaBits = xiaKey.split('').map(Number);
-            const allBits = [...xiaBits, ...shangBits]; // 初爻到上爻
+            const allBits = [...xiaBits, ...shangBits];
+
             yaoResults = allBits.map((bit, i) => {
                 const isYang = bit === 1;
                 const isChanging = (i === dongYaoNum);
@@ -1294,13 +1178,13 @@
             shakeCount = 6;
 
             document.getElementById('timeDisplay').textContent =
-                `${year}年${month}月${day}日 ${hour}时${minute}分`;
+                `${year}-${month}-${day} ${hour}:${minute}`;
             updateYaoLinesDisplay('yaoLinesTime');
             buildGuaFromResults();
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ==================== 快速起卦 ====================
+        // ==================== Quick Cast ====================
         function generateQuickGua() {
             yaoResults = [];
             for (let i = 0; i < 6; i++) {
@@ -1318,196 +1202,96 @@
             document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ==================== 渲染结果 ====================
-        function renderFullResult() {
+        // ==================== Render Result (only Ben Gua + Gua Ci) ====================
+        function renderResult() {
             const section = document.getElementById('resultSection');
             section.style.display = 'block';
 
             const benGua = currentBenGua;
-            const bianGua = currentBianGua;
             if (!benGua) {
-                section.innerHTML = '<p style="text-align:center;color:var(--red);">无法确定卦象，请重新起卦</p>';
+                section.innerHTML = '<p style="text-align:center;color:var(--red);">Unable to determine hexagram. Please try again.</p>';
                 return;
             }
 
             const benShang = getBaguaByKey(benGua[3]);
             const benXia = getBaguaByKey(benGua[4]);
-            const bianShang = bianGua ? getBaguaByKey(bianGua[3]) : null;
-            const bianXia = bianGua ? getBaguaByKey(bianGua[4]) : null;
 
-            // 体用分析
-            const hasChangingInShang = changingYaoIndexes.some(i => i >= 3);
-            const hasChangingInXia = changingYaoIndexes.some(i => i < 3);
-            let tiGua, yongGua, tiIsShang;
-            if (hasChangingInShang && !hasChangingInXia) {
-                yongGua = benShang;
-                tiGua = benXia;
-                tiIsShang = false;
-            } else if (hasChangingInXia && !hasChangingInShang) {
-                yongGua = benXia;
-                tiGua = benShang;
-                tiIsShang = true;
-            } else if (changingYaoIndexes.length === 0) {
-                tiGua = benXia;
-                yongGua = benShang;
-                tiIsShang = false;
-            } else {
-                const shangChanges = changingYaoIndexes.filter(i => i >= 3).length;
-                const xiaChanges = changingYaoIndexes.filter(i => i < 3).length;
-                if (shangChanges >= xiaChanges) {
-                    yongGua = benShang;
-                    tiGua = benXia;
-                    tiIsShang = false;
-                } else {
-                    yongGua = benXia;
-                    tiGua = benShang;
-                    tiIsShang = true;
-                }
-            }
-
-            // 五行生克
-            const wuxingOrder = ['金', '水', '木', '火', '土'];
-            const wuxingSheng = { '金': '水', '水': '木', '木': '火', '火': '土', '土': '金' };
-            const wuxingKe = { '金': '木', '木': '土', '土': '水', '水': '火', '火': '金' };
-
-            function getShengKeRelation(ti, yong) {
-                if (ti.wuxing === yong.wuxing) return { text: '体用比和', level: 'good', desc: '上下和谐，大吉大利' };
-                if (wuxingSheng[ti.wuxing] === yong.wuxing) return { text: '体生用', level: 'warning', desc: '泄气耗神，事多劳碌' };
-                if (wuxingSheng[yong.wuxing] === ti.wuxing) return { text: '用生体', level: 'good', desc: '进气受益，诸事顺遂' };
-                if (wuxingKe[ti.wuxing] === yong.wuxing) return { text: '体克用', level: 'good', desc: '制物有成，小吉可图' };
-                if (wuxingKe[yong.wuxing] === ti.wuxing) return { text: '用克体', level: 'warning', desc: '受制于外，大凶须慎' };
-                return { text: '未知', level: '', desc: '' };
-            }
-            const shengKe = tiGua && yongGua ? getShengKeRelation(tiGua, yongGua) : null;
-
-            // 构建HTML
             let html = '';
+            // Hexagram card
+            html += `
+            <div class="gua-card">
+                <div class="card-label">Primary Hexagram (Ben Gua)</div>
+                <div class="gua-symbol">${(benShang?benShang.symbol:'')}${(benXia?benXia.symbol:'')}</div>
+                <div class="gua-name">${benGua[1]}</div>
+                <div class="gua-pinyin">${benGua[2]}</div>
+                <div class="gua-trigrams">Upper: ${benShang?benShang.name+' ('+benShang.nature+')':''} · Lower: ${benXia?benXia.name+' ('+benXia.nature+')':''}</div>
+                <div style="font-size:0.75rem;color:var(--text-light);margin-top:4px;">Hexagram #${benGua[0]}</div>
+            </div>`;
 
-            // 本卦和变卦卡片
-            html += '<div class="gua-cards">';
-            html += renderGuaCard(benGua, benShang, benXia, '本卦（主卦）', 'ben-gua');
-            if (bianGua && (benGua[0] !== bianGua[0])) {
-                html += renderGuaCard(bianGua, bianShang, bianXia, '变卦（之卦）', 'bian-gua');
-            } else if (bianGua && benGua[0] === bianGua[0]) {
-                html +=
-                    '<div class="gua-card bian-gua"><div class="card-label">变卦</div><p style="color:var(--text-light);font-size:0.9rem;">六爻皆静，无变卦</p></div>';
-            }
-            html += '</div>';
-
-            // 变爻信息
+            // Changing Yao info
             if (changingYaoIndexes.length > 0) {
-                const yaoNames = ['初', '二', '三', '四', '五', '上'];
-                const changingNames = changingYaoIndexes.map(i => yaoNames[i] + '爻').join('、');
-                html +=
-                    `<div class="interpretation" style="margin-top:12px;"><p><strong>动爻：</strong><span class="highlight">${changingNames}</span>（共${changingYaoIndexes.length}个变爻）</p>`;
+                const yaoNames = ['First','Second','Third','Fourth','Fifth','Top'];
+                const changingNames = changingYaoIndexes.map(i => yaoNames[i] + ' Yao').join(', ');
+                html += `<div class="interpretation" style="margin-top:12px;">
+                    <h3>⚡ Moving Lines (Changing Yao)</h3>
+                    <p><strong>Changing:</strong> <span class="highlight">${changingNames}</span> (total ${changingYaoIndexes.length} moving line(s))</p>`;
                 if (changingYaoIndexes.length === 1) {
                     const yiIdx = changingYaoIndexes[0];
-                    const yaoCi = benGua[7] && benGua[7][yiIdx] ? benGua[7][yiIdx] : '（爻辞参见卦辞）';
-                    html += `<p><strong>主变爻辞：</strong>「${yaoCi}」</p>`;
+                    const yaoCi = benGua[8] && benGua[8][yiIdx] ? benGua[8][yiIdx] : '(see hexagram text)';
+                    html += `<p><strong>Key line text:</strong> 「${yaoCi}」</p>`;
                 }
-                html += '</div>';
+                html += `</div>`;
             } else {
-                html +=
-                    '<div class="interpretation" style="margin-top:12px;"><p><strong>六爻皆静</strong>，以本卦卦辞为主进行参悟。</p></div>';
-            }
-
-            // 体用分析
-            if (tiGua && yongGua && shengKe) {
-                html += `
-                <div class="interpretation" style="margin-top:10px;">
-                    <h3>体用生克分析</h3>
-                    <p><strong>体卦：</strong>${tiGua.symbol} ${tiGua.name}（${tiGua.wuxing}）— 代表问卦者</p>
-                    <p><strong>用卦：</strong>${yongGua.symbol} ${yongGua.name}（${yongGua.wuxing}）— 代表所问之事</p>
-                    <p><strong>关系：</strong><span class="tag ${shengKe.level}">${shengKe.text}</span> — ${shengKe.desc}</p>
+                html += `<div class="interpretation" style="margin-top:12px;">
+                    <h3>⚡ No Moving Lines</h3>
+                    <p>All six lines are stable. Focus on the hexagram statement (Gua Ci) for interpretation.</p>
                 </div>`;
             }
 
-            // 卦辞解读
+            // Gua Ci, Tuan Zhuan, Da Xiang
             html += `
             <div class="interpretation" style="margin-top:10px;">
-                <h3>📖 ${benGua[1]} · 卦辞</h3>
+                <h3>📖 Hexagram Statement (Gua Ci)</h3>
                 <p style="font-size:1rem;letter-spacing:1px;">「${benGua[5]}」</p>
-                <p style="font-size:0.82rem;color:var(--text-light);margin-top:4px;"><strong>彖传：</strong>${benGua[6]}</p>
-                <p style="font-size:0.82rem;color:var(--text-light);"><strong>大象：</strong>${benGua[7]}</p>
+                <p style="font-size:0.82rem;color:var(--text-light);margin-top:4px;"><strong>Tuan Zhuan (Commentary):</strong> ${benGua[6]}</p>
+                <p style="font-size:0.82rem;color:var(--text-light);"><strong>Da Xiang (Great Image):</strong> ${benGua[7]}</p>
             </div>`;
 
-            // 爻辞列表
+            // Yao Ci list
             if (benGua[8] && benGua[8].length === 6) {
-                const yaoNames = ['初爻', '二爻', '三爻', '四爻', '五爻', '上爻'];
-                html += '<div class="interpretation" style="margin-top:8px;"><h3>📝 爻辞一览</h3>';
+                const yaoNames = ['First Yao','Second Yao','Third Yao','Fourth Yao','Fifth Yao','Top Yao'];
+                html += '<div class="interpretation" style="margin-top:8px;"><h3>📝 Line Statements (Yao Ci)</h3>';
                 benGua[8].forEach((ci, i) => {
                     const isChanging = changingYaoIndexes.includes(i);
-                    html +=
-                        `<p style="margin:2px 0;${isChanging?'color:var(--red);font-weight:600;':''}"><strong>${yaoNames[i]}：</strong>${ci}${isChanging?' <span style="font-size:0.7rem;">← 动爻</span>':''}</p>`;
+                    html += `<p style="margin:2px 0;${isChanging?'color:var(--red);font-weight:600;':''}"><strong>${yaoNames[i]}:</strong> ${ci}${isChanging?' <span style="font-size:0.7rem;">← MOVING</span>':''}</p>`;
                 });
                 if (benGua[9]) {
-                    html +=
-                        `<p style="margin:2px 0;color:var(--gold);"><strong>用：</strong>${benGua[9]}</p>`;
+                    html += `<p style="margin:2px 0;color:var(--gold);"><strong>Additional (Yong):</strong> ${benGua[9]}</p>`;
                 }
                 html += '</div>';
             }
 
-            // 互卦、错卦、综卦
-            html += '<div class="extra-gua" style="margin-top:14px;">';
-            if (currentHuGua) {
-                const huShang = getBaguaByKey(currentHuGua[3]);
-                const huXia = getBaguaByKey(currentHuGua[4]);
-                html +=
-                    `<div class="extra-gua-item"><div style="font-size:0.7rem;color:var(--text-light);">互卦</div><div class="eg-symbol">${huShang?huShang.symbol:''}${huXia?huXia.symbol:''}</div><div class="eg-name">${currentHuGua[1]}</div></div>`;
-            }
-            if (currentCuoGua) {
-                const cuoShang = getBaguaByKey(currentCuoGua[3]);
-                const cuoXia = getBaguaByKey(currentCuoGua[4]);
-                html +=
-                    `<div class="extra-gua-item"><div style="font-size:0.7rem;color:var(--text-light);">错卦</div><div class="eg-symbol">${cuoShang?cuoShang.symbol:''}${cuoXia?cuoXia.symbol:''}</div><div class="eg-name">${currentCuoGua[1]}</div></div>`;
-            }
-            if (currentZongGua) {
-                const zongShang = getBaguaByKey(currentZongGua[3]);
-                const zongXia = getBaguaByKey(currentZongGua[4]);
-                html +=
-                    `<div class="extra-gua-item"><div style="font-size:0.7rem;color:var(--text-light);">综卦</div><div class="eg-symbol">${zongShang?zongShang.symbol:''}${zongXia?zongXia.symbol:''}</div><div class="eg-name">${currentZongGua[1]}</div></div>`;
-            }
-            html += '</div>';
-
-            // 温馨提示
             html += `
             <div style="text-align:center;margin-top:16px;font-size:0.75rem;color:var(--text-light);letter-spacing:1px;opacity:0.7;">
-                ⚠ 卦象仅供参考，人生之路还需自己用心行走
+                ⚠ For reference only. The path of life is still walked by your own heart.
             </div>`;
 
             section.innerHTML = html;
         }
 
-        function renderGuaCard(guaData, shangBagua, xiaBagua, label, cardClass) {
-            const symbol = (shangBagua ? shangBagua.symbol : '') + (xiaBagua ? xiaBagua.symbol : '');
-            return `
-            <div class="gua-card ${cardClass}">
-                <div class="card-label">${label}</div>
-                <div class="gua-symbol">${symbol}</div>
-                <div class="gua-name">${guaData[1]}</div>
-                <div class="gua-pinyin">${guaData[2]}</div>
-                <div class="gua-trigrams">上${shangBagua?shangBagua.name+' '+shangBagua.nature:''} · 下${xiaBagua?xiaBagua.name+' '+xiaBagua.nature:''}</div>
-                <div style="font-size:0.75rem;color:var(--text-light);margin-top:4px;">卦序：第${guaData[0]}卦</div>
-            </div>`;
-        }
-
-        // ==================== 重置 ====================
+        // ==================== Reset ====================
         function resetAll() {
             shakeCount = 0;
             yaoResults = [];
             currentBenGua = null;
-            currentBianGua = null;
-            currentHuGua = null;
-            currentCuoGua = null;
-            currentZongGua = null;
             changingYaoIndexes = [];
             document.getElementById('yaoLines').innerHTML = '';
             document.getElementById('yaoLinesTime').innerHTML = '';
             document.getElementById('yaoLinesQuick').innerHTML = '';
             document.getElementById('resultSection').style.display = 'none';
             document.getElementById('resultSection').innerHTML = '';
-            document.getElementById('shakeInfo').innerHTML = '点击下方按钮摇卦，共需摇 <strong>六次</strong>（从初爻到上爻）';
-            document.getElementById('btnShake').textContent = '🪙 摇 卦';
+            document.getElementById('shakeInfo').innerHTML = 'Click the button below to toss coins <strong>six times</strong> (from the first line to the top line)';
+            document.getElementById('btnShake').textContent = '🪙 Shake';
             document.getElementById('btnShake').disabled = false;
             document.getElementById('btnShake').onclick = shakeCoins;
             document.getElementById('timeDisplay').textContent = '';
@@ -1519,7 +1303,7 @@
             document.getElementById('mainCard').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // ==================== 切换起卦方式 ====================
+        // ==================== Switch Method ====================
         function switchMethod(method) {
             currentMethod = method;
             resetAll();
@@ -1533,11 +1317,10 @@
             if (method === 'time') {
                 const now = new Date();
                 document.getElementById('timeDisplay').textContent =
-                    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${now.getHours()}时${now.getMinutes()}分`;
+                    `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
             }
         }
 
-        // ==================== 事件绑定 ====================
         document.querySelectorAll('.method-tab').forEach(tab => {
             tab.addEventListener('click', function() {
                 const method = this.getAttribute('data-method');
@@ -1545,25 +1328,20 @@
             });
         });
 
-        // 初始化
         document.getElementById('btnShake').onclick = shakeCoins;
         document.getElementById('btnReset').onclick = resetAll;
-        updateTimeDisplay();
 
         function updateTimeDisplay() {
             const now = new Date();
             const el = document.getElementById('timeDisplay');
             if (el && currentMethod === 'time') {
-                el.textContent =
-                    `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${now.getHours()}时${now.getMinutes()}分`;
+                el.textContent = `${now.getFullYear()}-${now.getMonth()+1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}`;
             }
         }
         setInterval(updateTimeDisplay, 30000);
 
-        // 键盘快捷键
         document.addEventListener('keydown', function(e) {
-            if (e.key === ' ' && currentMethod === 'coin' && shakeCount < 6 && document.activeElement === document
-                .body) {
+            if (e.key === ' ' && currentMethod === 'coin' && shakeCount < 6 && document.activeElement === document.body) {
                 e.preventDefault();
                 shakeCoins();
             }
@@ -1573,13 +1351,7 @@
             }
         });
 
-        console.log('🀄 周易六十四卦起卦解卦工具已就绪');
-        console.log('   - 铜钱摇卦：点击摇卦按钮或按空格键');
-        console.log('   - 时间起卦：自动根据时间计算');
-        console.log('   - 快速起卦：一键随机生成');
-        console.log('   - 按 Ctrl+R 重置');
-        console.log('   包含完整64卦卦辞、彖传、大象传及384条爻辞');
-        console.log('   支持体用生克分析、互卦错卦综卦展示');
+        console.log('I Ching Hexagram Tool ready (English UI, original Chinese texts).');
     </script>
 </body>
 </html>
