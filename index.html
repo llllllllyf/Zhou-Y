@@ -60,7 +60,7 @@
         }
         .modal-box {
             background: #fefdf7; border-radius: 20px; padding: 36px 32px 28px;
-            max-width: 580px; width: 92%; box-shadow: 0 30px 50px rgba(0,0,0,0.4);
+            max-width: 600px; width: 92%; box-shadow: 0 30px 50px rgba(0,0,0,0.4);
             text-align: center; border: 2px solid var(--gold);
             position: relative;
             background-image: linear-gradient(to bottom, #fffef9, #faf6ed);
@@ -79,14 +79,22 @@
             list-style: none; text-align: left; margin: 0 auto 24px; padding: 0 8px;
         }
         .modal-box li {
-            padding: 10px 0; border-bottom: 1px dashed var(--border);
-            font-size: 0.95rem; display: flex; align-items: flex-start; gap: 12px;
-            color: #3d3226; line-height: 1.6;
+            padding: 12px 0 12px 36px;
+            border-bottom: 1px dashed var(--border);
+            font-size: 0.95rem;
+            color: #3d3226;
+            line-height: 1.6;
+            position: relative;
         }
         .modal-box li::before {
-            content: "☯"; font-size: 1.3rem; color: var(--gold);
-            flex-shrink: 0; width: 24px; text-align: center;
-            margin-right: 4px; margin-top: 1px;
+            content: "☯";
+            font-size: 1.3rem;
+            color: var(--gold);
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 24px;
+            text-align: center;
         }
         .modal-box li strong { font-weight: 600; }
         .modal-box .btn-begin {
@@ -457,10 +465,10 @@
         window.crypto.getRandomValues(rand);
         const val = rand[0];
         let heads;
-        if (val < 8192) heads = 3;           // 老阳
-        else if (val < 32768) heads = 2;     // 少阳
-        else if (val < 57344) heads = 1;     // 少阴
-        else heads = 0;                      // 老阴
+        if (val < 8192) heads = 3;
+        else if (val < 32768) heads = 2;
+        else if (val < 57344) heads = 1;
+        else heads = 0;
         const isYang = heads >= 2;
         const faces = [];
         for (let i = 0; i < 3; i++) faces.push(i < heads ? 'heads' : 'tails');
